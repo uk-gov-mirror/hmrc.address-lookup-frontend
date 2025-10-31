@@ -25,6 +25,7 @@ case class ManualAddressEntryConfig(
                                      line2MaxLength: Int = ManualAddressEntryConfig.defaultMax,
                                      line3MaxLength: Int = ManualAddressEntryConfig.defaultMax,
                                      townMaxLength: Int = ManualAddressEntryConfig.defaultMax,
+                                     displayOrganisationField: Boolean = true,
                                      mandatoryFields: Option[MandatoryFieldsConfigModel] = None
                                    )
 
@@ -40,6 +41,7 @@ object ManualAddressEntryConfig {
       (__ \ "line2MaxLength").readWithDefault[Int](defaultMax)(constraints) and
       (__ \ "line3MaxLength").readWithDefault[Int](defaultMax)(constraints) and
       (__ \ "townMaxLength").readWithDefault[Int](defaultMax)(constraints) and
+      (__ \ "displayOrganisationField").readWithDefault[Boolean](true) and
       (__ \ "mandatoryFields").readNullable[MandatoryFieldsConfigModel]
   )(ManualAddressEntryConfig.apply _)
 

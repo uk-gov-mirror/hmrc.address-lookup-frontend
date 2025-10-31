@@ -26,12 +26,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json._
 import utils.TestConstants._
 
-class ManualAddressEntryConfigSpec extends AnyWordSpecLike with Matchers with GuiceOneAppPerSuite {
-  override implicit lazy val app: Application = {
-    SharedMetricRegistries.clear()
-    new GuiceApplicationBuilder().build()
-  }
-
+class ManualAddressEntryConfigSpec extends AnyWordSpecLike with Matchers {
   "Manual Address Entry Config" when {
 
     "deserializing from JSON" should {
@@ -59,12 +54,14 @@ class ManualAddressEntryConfigSpec extends AnyWordSpecLike with Matchers with Gu
           "line1MaxLength" -> 50,
           "line2MaxLength" -> 60,
           "line3MaxLength" -> 70,
-          "townMaxLength" -> 80
+          "townMaxLength" -> 80,
+          "displayOrganisationField" -> false
         )) mustBe JsSuccess(ManualAddressEntryConfig(
           line1MaxLength = 50,
           line2MaxLength = 60,
           line3MaxLength = 70,
-          townMaxLength = 80
+          townMaxLength = 80,
+          displayOrganisationField = false
         ))
       }
 
@@ -78,7 +75,8 @@ class ManualAddressEntryConfigSpec extends AnyWordSpecLike with Matchers with Gu
         "line1MaxLength" -> ManualAddressEntryConfig.defaultMax,
         "line2MaxLength" -> ManualAddressEntryConfig.defaultMax,
         "line3MaxLength" -> ManualAddressEntryConfig.defaultMax,
-        "townMaxLength" -> ManualAddressEntryConfig.defaultMax
+        "townMaxLength" -> ManualAddressEntryConfig.defaultMax,
+        "displayOrganisationField" -> true
       )
     }
   }

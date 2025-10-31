@@ -32,7 +32,7 @@ import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 import uk.gov.hmrc.play.audit.model.{DataEvent, EventTypes}
 import utils.PostcodeHelper
 import views.ViewHelper
-import views.html.abp.{address_mode_edit, lookup, non_uk_mode_edit, select, uk_mode_edit}
+import views.html.abp.{address_mode_edit, lookup, select}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -48,8 +48,6 @@ class AbpAddressLookupController @Inject()(
                                             countryService: CountryService,
                                             lookup: lookup,
                                             select: select,
-                                            uk_mode_edit: uk_mode_edit,
-                                            non_uk_mode_edit: non_uk_mode_edit,
                                             confirm: views.html.abp.confirm,
                                             no_results: views.html.abp.no_results,
                                             too_many_results: views.html.abp.too_many_results,
