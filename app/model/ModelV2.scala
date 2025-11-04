@@ -119,7 +119,7 @@ object ManualAddressEntryConfig {
       (__ \ "line2MaxLength").readWithDefault[Int](defaultMax)(constraints) and
       (__ \ "line3MaxLength").readWithDefault[Int](defaultMax)(constraints) and
       (__ \ "townMaxLength").readWithDefault[Int](defaultMax)(constraints)
-  )(ManualAddressEntryConfig.apply _)
+  )(ManualAddressEntryConfig.apply)
 
   implicit val writes: Writes[ManualAddressEntryConfig] = Json.writes[ManualAddressEntryConfig]
 }
@@ -130,6 +130,8 @@ object ConfirmPageConfig {
 }
 
 object TimeoutConfig {
+  def unapply(timeoutConfig: TimeoutConfig) = Some((timeoutConfig.timeoutAmount, timeoutConfig.timeoutUrl, timeoutConfig.timeoutKeepAliveUrl))
+  
   implicit val timeoutFormat: Format[TimeoutConfig] = (
     (JsPath \ "timeoutAmount").format[Int](min(120)) and
       (JsPath \ "timeoutUrl").format[String] and

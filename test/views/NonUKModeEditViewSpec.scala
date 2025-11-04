@@ -83,7 +83,7 @@ class NonUKModeEditViewSpec extends ViewSpec {
       val doc: Document = Jsoup.parse(testPage.body)
 
       doc.testElementExists("countryCode")
-      doc.getDropList("countryCode").select("option").size() shouldBe 3
+      doc.getDropList("countryCode").select("option").size().shouldBe(3)
       doc.getDropList("countryCode") should have(
         option("FR-France", "France"),
         option("AL-Albanian", "Albanian")
@@ -100,7 +100,7 @@ class NonUKModeEditViewSpec extends ViewSpec {
       )
       val doc: Document = Jsoup.parse(testPage.body)
 
-      doc.getElementById("town").attr("autocomplete") shouldBe "address-level1"
+      doc.getElementById("town").attr("autocomplete").shouldBe("address-level1")
     
     }
   }

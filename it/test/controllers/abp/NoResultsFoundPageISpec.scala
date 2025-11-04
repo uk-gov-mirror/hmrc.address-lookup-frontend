@@ -66,12 +66,12 @@ class NoResultsFoundPageISpec extends IntegrationSpecBase {
         val res = await(fResponse)
         val doc = getDocFromResponse(res)
 
-        res.status shouldBe OK
+        res.status.shouldBe(OK)
 
         testCustomPartsOfGovWrapperElementsForDefaultConfig(fResponse)
 
-        doc.title shouldBe EnglishContent.title(testPostCode)
-        doc.h1.text() shouldBe EnglishContent.heading(testPostCode)
+        doc.title.shouldBe(EnglishContent.title(testPostCode))
+        doc.h1.text().shouldBe(EnglishContent.heading(testPostCode))
 
         doc.select("a[class=govuk-back-link]") should have(
           text("Back")
@@ -103,12 +103,12 @@ class NoResultsFoundPageISpec extends IntegrationSpecBase {
         val res = await(fResponse)
         val doc = getDocFromResponse(res)
 
-        res.status shouldBe OK
+        res.status.shouldBe(OK)
 
         testCustomPartsOfGovWrapperElementsForFullConfigAllTrue(fResponse, "NAV_TITLE")
 
-        doc.title shouldBe EnglishContent.title(testPostCode) + " - NAV_TITLE - GOV.UK"
-        doc.h1.text() shouldBe EnglishContent.heading(testPostCode)
+        doc.title.shouldBe(EnglishContent.title(testPostCode) + " - NAV_TITLE - GOV.UK")
+        doc.h1.text().shouldBe(EnglishContent.heading(testPostCode))
 
         doc.select("a[class=govuk-back-link]") should have(
           text("Back")
@@ -140,12 +140,12 @@ class NoResultsFoundPageISpec extends IntegrationSpecBase {
         val res = await(fResponse)
         val doc = getDocFromResponse(res)
 
-        res.status shouldBe OK
+        res.status.shouldBe(OK)
 
         testCustomPartsOfGovWrapperElementsForFullConfigWithAllTopConfigAsNoneAndAllBooleansFalse(fResponse)
 
-        doc.title shouldBe EnglishContent.title(testPostCode)
-        doc.h1.text() shouldBe EnglishContent.heading(testPostCode)
+        doc.title.shouldBe(EnglishContent.title(testPostCode))
+        doc.h1.text().shouldBe(EnglishContent.heading(testPostCode))
 
         doc.select("a[class=govuk-back-link]") should have(
           text("Back")
@@ -177,12 +177,12 @@ class NoResultsFoundPageISpec extends IntegrationSpecBase {
         val res = await(fResponse)
         val doc = getDocFromResponse(res)
 
-        res.status shouldBe OK
+        res.status.shouldBe(OK)
 
         testCustomPartsOfGovWrapperElementsForFullConfigWithAllTopConfigAsNoneAndAllBooleansFalse(fResponse)
 
-        doc.title shouldBe WelshContent.title(testPostCode)
-        doc.h1.text() shouldBe WelshContent.heading(testPostCode)
+        doc.title.shouldBe(WelshContent.title(testPostCode))
+        doc.h1.text().shouldBe(WelshContent.heading(testPostCode))
 
         doc.select("a[class=govuk-back-link]") should have(
           text("Yn ôl")
@@ -222,10 +222,10 @@ class NoResultsFoundPageISpec extends IntegrationSpecBase {
         val res = await(fResponse)
         val doc = getDocFromResponse(res)
 
-        res.status shouldBe OK
+        res.status.shouldBe(OK)
 
-        doc.title shouldBe EnglishContent.title(testPostCode)
-        doc.h1.text() shouldBe EnglishContent.heading(testPostCode)
+        doc.title.shouldBe(EnglishContent.title(testPostCode))
+        doc.h1.text().shouldBe(EnglishContent.heading(testPostCode))
 
         doc.select("a[class=govuk-back-link]") should not have (
           text("Back")
@@ -265,7 +265,7 @@ class NoResultsFoundPageISpec extends IntegrationSpecBase {
 
         val res = await(fResponse)
 
-        res.status shouldBe OK
+        res.status.shouldBe(OK)
         val document = Jsoup.parse(res.body)
         document.getElementById("pageHeading").classNames() should contain("govuk-heading-l")
       }

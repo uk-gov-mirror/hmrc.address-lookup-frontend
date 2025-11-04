@@ -121,7 +121,7 @@ class ApiControllerV2ISpec extends IntegrationSpecBase {
           .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF, "Csrf-Token" -> "nocheck")
           .post(Json.toJson(v2Model.config)))
 
-        res.status shouldBe ACCEPTED
+        res.status.shouldBe(ACCEPTED)
         res.header(HeaderNames.LOCATION) should contain(s"$addressLookupEndpoint/lookup-address/newJourney/begin")
       }
     }
@@ -146,10 +146,10 @@ class ApiControllerV2ISpec extends IntegrationSpecBase {
           .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF, "Csrf-Token" -> "nocheck")
           .post(Json.toJson(v2Model.config)))
 
-        res.status shouldBe ACCEPTED
+        res.status.shouldBe(ACCEPTED)
         res.header(HeaderNames.LOCATION) should contain(s"$addressLookupEndpoint/lookup-address/newJourney/begin")
 
-        await(cache.getV2(MockIdGenerationService.uuid)) shouldBe Some(v2Model)
+        await(cache.getV2(MockIdGenerationService.uuid)).shouldBe(Some(v2Model))
       }
     }
   }
@@ -166,8 +166,8 @@ class ApiControllerV2ISpec extends IntegrationSpecBase {
           .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF, "Csrf-Token" -> "nocheck")
           .get())
 
-        res.status shouldBe OK
-        Json.parse(res.body) shouldBe Json.toJson(testConfirmedResponseAddress(testJourneyId))
+        res.status.shouldBe(OK)
+        Json.parse(res.body).shouldBe(Json.toJson(testConfirmedResponseAddress(testJourneyId)))
       }
     }
 
@@ -182,7 +182,7 @@ class ApiControllerV2ISpec extends IntegrationSpecBase {
           .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF, "Csrf-Token" -> "nocheck")
           .get())
 
-        res.status shouldBe NOT_FOUND
+        res.status.shouldBe(NOT_FOUND)
       }
     }
   }

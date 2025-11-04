@@ -80,7 +80,7 @@ class UKModeEditViewSpec extends ViewSpec {
       )
       val doc: Document = Jsoup.parse(testPage.body)
 
-      doc.getElementById("town").attr("autocomplete") shouldBe "address-level1"
+      doc.getElementById("town").attr("autocomplete").shouldBe("address-level1")
     
     }
   }

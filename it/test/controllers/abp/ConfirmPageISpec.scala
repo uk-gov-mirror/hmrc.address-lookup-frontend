@@ -50,9 +50,9 @@ class ConfirmPageISpec extends IntegrationSpecBase {
       val doc = getDocFromResponse(fResponse)
 
       doc.select("a[class=govuk-back-link]") should have(text("Back"))
-      doc.title shouldBe messages("confirmPage.title")
-      doc.h1.text() shouldBe messages("confirmPage.heading")
-      doc.submitButton.text() shouldBe "Confirm address"
+      doc.title.shouldBe(messages("confirmPage.title"))
+      doc.h1.text().shouldBe(messages("confirmPage.heading"))
+      doc.submitButton.text().shouldBe("Confirm address")
       doc.link("changeLink") should have(text(messages("confirmPage.changeLinkText")))
       doc.address should have(
         addressLine("line1", "1 High Street"),
@@ -69,7 +69,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
       testElementDoesntExist(res, "confirmChangeText")
 
       testCustomPartsOfGovWrapperElementsForDefaultConfig(fResponse)
-      res.status shouldBe OK
+      res.status.shouldBe(OK)
     }
 
     "redirect to the lookup page if no selected address exists in keystore" in {
@@ -81,8 +81,8 @@ class ConfirmPageISpec extends IntegrationSpecBase {
         .get()
 
       val res = await(fResponse)
-      res.status shouldBe SEE_OTHER
-      res.header(HeaderNames.LOCATION).get shouldBe s"/lookup-address/$testJourneyId/lookup"
+      res.status.shouldBe(SEE_OTHER)
+      res.header(HeaderNames.LOCATION).get.shouldBe(s"/lookup-address/$testJourneyId/lookup")
     }
 
     "pre-pop with an address and all elements are correct for FULL journey config model with all booleans as TRUE for page" in {
@@ -104,9 +104,9 @@ class ConfirmPageISpec extends IntegrationSpecBase {
       val doc = getDocFromResponse(fResponse)
 
       doc.select("a[class=govuk-back-link]") should have(text("Back"))
-      doc.title shouldBe "confirm-title - NAV_TITLE - GOV.UK"
-      doc.h1.text() shouldBe "confirm-heading"
-      doc.submitButton.text() shouldBe "confirm-submitLabel"
+      doc.title.shouldBe("confirm-title - NAV_TITLE - GOV.UK")
+      doc.h1.text().shouldBe("confirm-heading")
+      doc.submitButton.text().shouldBe("confirm-submitLabel")
       doc.address should have(
         addressLine("line1", "1 High Street"),
         addressLine("line2", "Line 2"),
@@ -127,7 +127,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
         fResponse,
         navTitle = "NAV_TITLE"
       )
-      res.status shouldBe OK
+      res.status.shouldBe(OK)
     }
 
     "pre-pop with an address and all elements are correct for FULL journey config model with all booleans as FALSE for page" in {
@@ -149,9 +149,9 @@ class ConfirmPageISpec extends IntegrationSpecBase {
       val doc = getDocFromResponse(fResponse)
 
       doc.select("a[class=govuk-back-link]") should have(text("Back"))
-      doc.title shouldBe "confirm-title"
-      doc.h1.text() shouldBe "confirm-heading"
-      doc.submitButton.text() shouldBe "confirm-submitLabel"
+      doc.title.shouldBe("confirm-title")
+      doc.h1.text().shouldBe("confirm-heading")
+      doc.submitButton.text().shouldBe("confirm-submitLabel")
       doc.address should have(
         addressLine("line1", "1 High Street"),
         addressLine("line2", "Line 2"),
@@ -170,7 +170,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
       testCustomPartsOfGovWrapperElementsForFullConfigWithAllTopConfigAsNoneAndAllBooleansFalse(
         fResponse
       )
-      res.status shouldBe OK
+      res.status.shouldBe(OK)
     }
 
     "pre-pop with an address and all elements are correct for almost full journey config model (missing field in confirm page) with all booleans as FALSE for page" in {
@@ -192,9 +192,9 @@ class ConfirmPageISpec extends IntegrationSpecBase {
       val doc = getDocFromResponse(fResponse)
 
       doc.select("a[class=govuk-back-link]") should have(text("Back"))
-      doc.title shouldBe "confirm-title"
-      doc.h1.text() shouldBe "Review and confirm"
-      doc.submitButton.text() shouldBe "confirm-submitLabel"
+      doc.title.shouldBe("confirm-title")
+      doc.h1.text().shouldBe("Review and confirm")
+      doc.submitButton.text().shouldBe("confirm-submitLabel")
       doc.address should have(
         addressLine("line1", "1 High Street"),
         addressLine("line2", "Line 2"),
@@ -209,7 +209,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
       testElementDoesntExist(res, "confirmChangeText")
 
       testCustomPartsOfGovWrapperElementsForFullConfigWithAllTopConfigAsNoneAndAllBooleansFalse(fResponse)
-      res.status shouldBe OK
+      res.status.shouldBe(OK)
     }
 
     "pre-pop with an address and all elements are correct for a minimal Welsh journey config model" in {
@@ -231,9 +231,9 @@ class ConfirmPageISpec extends IntegrationSpecBase {
       val doc = getDocFromResponse(fResponse)
 
       doc.select("a[class=govuk-back-link]") should have(text(messages(Lang("cy"), "constants.back")))
-      doc.title shouldBe messages(Lang("cy"), "confirmPage.title")
-      doc.h1.text() shouldBe messages(Lang("cy"), "confirmPage.heading")
-      doc.submitButton.text() shouldBe messages(Lang("cy"), "confirmPage.submitLabel")
+      doc.title.shouldBe(messages(Lang("cy"), "confirmPage.title"))
+      doc.h1.text().shouldBe(messages(Lang("cy"), "confirmPage.heading"))
+      doc.submitButton.text().shouldBe(messages(Lang("cy"), "confirmPage.submitLabel"))
       doc.link("changeLink") should have(text(messages(Lang("cy"), "confirmPage.changeLinkText")))
 
       doc.address should have(
@@ -248,7 +248,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
       testElementDoesntExist(res, "confirmChangeText")
 
       testCustomPartsOfGovWrapperElementsForDefaultConfig(fResponse)
-      res.status shouldBe OK
+      res.status.shouldBe(OK)
     }
 
     "pre-pop with an address and all elements are correct for FULL Welsh journey config model with all booleans as FALSE for page" in {
@@ -266,9 +266,9 @@ class ConfirmPageISpec extends IntegrationSpecBase {
 
 
       doc.select("a[class=govuk-back-link]") should have(text(messages(Lang("cy"), "constants.back")))
-      doc.title shouldBe "cy-confirm-title"
-      doc.h1.text() shouldBe "cy-confirm-heading"
-      doc.submitButton.text() shouldBe "cy-confirm-submitLabel"
+      doc.title.shouldBe("cy-confirm-title")
+      doc.h1.text().shouldBe("cy-confirm-heading")
+      doc.submitButton.text().shouldBe("cy-confirm-submitLabel")
       doc.address should have(
         addressLine("line1", "1 High Street"),
         addressLine("line2", "Line 2"),
@@ -283,7 +283,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
       testCustomPartsOfGovWrapperElementsForFullConfigWithAllTopConfigAsNoneAndAllBooleansFalse(
         fResponse
       )
-      res.status shouldBe OK
+      res.status.shouldBe(OK)
     }
 
     "allow the initialising service to override the header size" in {
@@ -298,7 +298,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
         .get()
       val res = await(fResponse)
 
-      res.status shouldBe OK
+      res.status.shouldBe(OK)
       val document = Jsoup.parse(res.body)
       document.getElementById("pageHeading").classNames() should contain("govuk-heading-l")
     }
@@ -314,8 +314,8 @@ class ConfirmPageISpec extends IntegrationSpecBase {
         .post(Map("csrfToken" -> Seq("xxx-ignored-xxx")))
 
       val res = await(fResponse)
-      res.status shouldBe SEE_OTHER
-      res.header(HeaderNames.LOCATION).get shouldBe s"$testContinueUrl?id=$testJourneyId"
+      res.status.shouldBe(SEE_OTHER)
+      res.header(HeaderNames.LOCATION).get.shouldBe(s"$testContinueUrl?id=$testJourneyId")
     }
 
     "should redirect to the confirm page if incorrect data in keystore" in {
@@ -327,8 +327,8 @@ class ConfirmPageISpec extends IntegrationSpecBase {
         .post(Map("csrfToken" -> Seq("xxx-ignored-xxx")))
 
       val res = await(fResponse)
-      res.status shouldBe SEE_OTHER
-      res.header(HeaderNames.LOCATION).get shouldBe s"/lookup-address/$testJourneyId/confirm"
+      res.status.shouldBe(SEE_OTHER)
+      res.header(HeaderNames.LOCATION).get.shouldBe(s"/lookup-address/$testJourneyId/confirm")
     }
   }
 }

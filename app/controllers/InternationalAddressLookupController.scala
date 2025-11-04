@@ -33,7 +33,7 @@ import views.html.international.{edit, select}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
-
+import LanguageLabelsForMessages._
 
 @Singleton
 class InternationalAddressLookupController @Inject()(
@@ -59,8 +59,6 @@ class InternationalAddressLookupController @Inject()(
   def lookup(id: String, filter: Option[String]): Action[AnyContent] = Action.async { implicit req =>
       journeyRepository.getV2(id).map {
         case Some(journeyData) =>
-          import LanguageLabelsForMessages._
-
           val remoteMessagesApi = remoteMessagesApiProvider.getRemoteMessagesApi(
             journeyData.config.labels.map(ls => Json.toJsObject(ls)).orElse(Some(Json.obj())))
 
@@ -82,9 +80,6 @@ class InternationalAddressLookupController @Inject()(
     implicit req =>
       journeyRepository.getV2(id).map {
         case Some(journeyData) =>
-
-          import LanguageLabelsForMessages._
-
           val remoteMessagesApi = remoteMessagesApiProvider.getRemoteMessagesApi(
             journeyData.config.labels.map(ls => Json.toJsObject(ls)).orElse(Some(Json.obj())))
 
@@ -107,8 +102,6 @@ class InternationalAddressLookupController @Inject()(
 
   def select(id: String, filter: String): Action[AnyContent] = Action.async { implicit req =>
     withFutureJourneyV2(id) { journeyData =>
-      import LanguageLabelsForMessages._
-
       val remoteMessagesApi = remoteMessagesApiProvider.getRemoteMessagesApi(
         journeyData.config.labels.map(ls => Json.toJsObject(ls)).orElse(Some(Json.obj())))
 
@@ -176,8 +169,6 @@ class InternationalAddressLookupController @Inject()(
   def handleSelect(id: String, filter: String): Action[AnyContent] = Action.async {
     implicit req =>
       withJourneyV2(id) { journeyData =>
-        import LanguageLabelsForMessages._
-
         val remoteMessagesApi = remoteMessagesApiProvider.getRemoteMessagesApi(
           journeyData.config.labels.map(ls => Json.toJsObject(ls)).orElse(Some(Json.obj())))
 
@@ -249,8 +240,6 @@ class InternationalAddressLookupController @Inject()(
   def edit(id: String): Action[AnyContent] =
     Action.async { implicit req =>
       withJourneyV2(id) { journeyData => {
-        import LanguageLabelsForMessages._
-
         val allowedSeqCountries = (cs: Seq[Country]) =>
           allowedCountries(cs, journeyData.config.options.allowedCountryCodes)
 
@@ -289,8 +278,6 @@ class InternationalAddressLookupController @Inject()(
   def handleEdit(id: String): Action[AnyContent] = Action.async {
     implicit req =>
       withJourneyV2(id) { journeyData => {
-        import LanguageLabelsForMessages._
-
         val remoteMessagesApi = remoteMessagesApiProvider.getRemoteMessagesApi(
           journeyData.config.labels.map(ls => Json.toJsObject(ls)).orElse(Some(Json.obj())))
 
@@ -337,8 +324,6 @@ class InternationalAddressLookupController @Inject()(
   // GET  /:id/confirm
   def confirm(id: String): Action[AnyContent] = Action.async { implicit req =>
     withJourneyV2(id) { journeyData => {
-      import LanguageLabelsForMessages._
-
       val remoteMessagesApi = remoteMessagesApiProvider.getRemoteMessagesApi(
         journeyData.config.labels.map(ls => Json.toJsObject(ls)).orElse(Some(Json.obj())))
 
