@@ -19,8 +19,8 @@ package controllers.abp
 import com.codahale.metrics.SharedMetricRegistries
 import controllers.routes
 import itutil.IntegrationSpecBase
-import itutil.config.AddressRecordConstants._
-import itutil.config.IntegrationTestConstants._
+import itutil.config.AddressRecordConstants.*
+import itutil.config.IntegrationTestConstants.*
 import itutil.config.PageElementConstants.SelectPage
 import model.{JourneyConfigV2, JourneyDataV2, JourneyOptions, SelectPageConfig}
 import org.jsoup.Jsoup
@@ -28,6 +28,8 @@ import play.api.Application
 import play.api.Mode.Test
 import play.api.i18n.Lang
 import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.libs.ws.DefaultBodyWritables.writeableOf_urlEncodedForm
+import play.api.libs.ws.WSResponse
 import services.JourneyDataV2Cache
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -259,11 +261,11 @@ class SelectPageISpec extends IntegrationSpecBase {
         val fResponse = buildClientLookupAddress(path = "select?postcode=AB111AB", testJourneyId)
           .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF, "Csrf-Token" -> "nocheck")
           .get()
-        val res = await(fResponse)
+        val res: WSResponse = await(fResponse)
 
         res.status.shouldBe(OK)
         val document = Jsoup.parse(res.body)
-        document.getElementById("pageHeading").classNames() should contain("govuk-heading-l")
+        document.getElementById("pageHeading").classNames().should(contain("govuk-heading-l"))
       }
     }
   }
@@ -306,7 +308,7 @@ class SelectPageISpec extends IntegrationSpecBase {
           "csrfToken" -> Seq("xxx-ignored-xxx"),
           "addressId" -> Seq(testIds.head)
         ))
-      val res = await(fRes)
+      val res: WSResponse = await(fRes)
       res.status.shouldBe(SEE_OTHER)
     }
 

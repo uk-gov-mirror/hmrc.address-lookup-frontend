@@ -17,12 +17,14 @@
 package controllers.abp
 
 import itutil.IntegrationSpecBase
-import itutil.config.IntegrationTestConstants._
-import model._
+import itutil.config.IntegrationTestConstants.*
+import model.*
 import org.jsoup.Jsoup
 import play.api.http.HeaderNames
-import play.api.http.Status._
+import play.api.http.Status.*
 import play.api.i18n.Lang
+import play.api.libs.ws.DefaultBodyWritables.writeableOf_urlEncodedForm
+import play.api.libs.ws.WSResponse
 import services.JourneyDataV2Cache
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -46,7 +48,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
         .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF, "Csrf-Token" -> "nocheck")
         .get()
 
-      val res = await(fResponse)
+      val res: WSResponse = await(fResponse)
       val doc = getDocFromResponse(fResponse)
 
       doc.select("a[class=govuk-back-link]") should have(text("Back"))
@@ -80,7 +82,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
         .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF, "Csrf-Token" -> "nocheck")
         .get()
 
-      val res = await(fResponse)
+      val res: WSResponse = await(fResponse)
       res.status.shouldBe(SEE_OTHER)
       res.header(HeaderNames.LOCATION).get.shouldBe(s"/lookup-address/$testJourneyId/lookup")
     }
@@ -100,7 +102,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
           "Csrf-Token" -> "nocheck"
         )
         .get()
-      val res = await(fResponse)
+      val res: WSResponse = await(fResponse)
       val doc = getDocFromResponse(fResponse)
 
       doc.select("a[class=govuk-back-link]") should have(text("Back"))
@@ -145,7 +147,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
           "Csrf-Token" -> "nocheck"
         )
         .get()
-      val res = await(fResponse)
+      val res: WSResponse = await(fResponse)
       val doc = getDocFromResponse(fResponse)
 
       doc.select("a[class=govuk-back-link]") should have(text("Back"))
@@ -188,7 +190,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
         .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF, "Csrf-Token" -> "nocheck")
         .get()
 
-      val res = await(fResponse)
+      val res: WSResponse = await(fResponse)
       val doc = getDocFromResponse(fResponse)
 
       doc.select("a[class=govuk-back-link]") should have(text("Back"))
@@ -227,7 +229,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
         .withHttpHeaders(HeaderNames.COOKIE -> (sessionCookieWithCSRF + ";PLAY_LANG=cy;"), "Csrf-Token" -> "nocheck")
         .get()
 
-      val res = await(fResponse)
+      val res: WSResponse = await(fResponse)
       val doc = getDocFromResponse(fResponse)
 
       doc.select("a[class=govuk-back-link]") should have(text(messages(Lang("cy"), "constants.back")))
@@ -261,7 +263,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
         .withHttpHeaders(HeaderNames.COOKIE -> (sessionCookieWithCSRF + ";PLAY_LANG=cy;"), "Csrf-Token" -> "nocheck")
         .get()
 
-      val res = await(fResponse)
+      val res: WSResponse = await(fResponse)
       val doc = getDocFromResponse(fResponse)
 
 
@@ -296,11 +298,11 @@ class ConfirmPageISpec extends IntegrationSpecBase {
         .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF,
           "Csrf-Token" -> "nocheck")
         .get()
-      val res = await(fResponse)
+      val res: WSResponse = await(fResponse)
 
       res.status.shouldBe(OK)
       val document = Jsoup.parse(res.body)
-      document.getElementById("pageHeading").classNames() should contain("govuk-heading-l")
+      document.getElementById("pageHeading").classNames().should(contain("govuk-heading-l"))
     }
   }
 
@@ -313,7 +315,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
         .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF, "Csrf-Token" -> "nocheck")
         .post(Map("csrfToken" -> Seq("xxx-ignored-xxx")))
 
-      val res = await(fResponse)
+      val res: WSResponse = await(fResponse)
       res.status.shouldBe(SEE_OTHER)
       res.header(HeaderNames.LOCATION).get.shouldBe(s"$testContinueUrl?id=$testJourneyId")
     }
@@ -326,7 +328,7 @@ class ConfirmPageISpec extends IntegrationSpecBase {
         .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF, "Csrf-Token" -> "nocheck")
         .post(Map("csrfToken" -> Seq("xxx-ignored-xxx")))
 
-      val res = await(fResponse)
+      val res: WSResponse = await(fResponse)
       res.status.shouldBe(SEE_OTHER)
       res.header(HeaderNames.LOCATION).get.shouldBe(s"/lookup-address/$testJourneyId/confirm")
     }

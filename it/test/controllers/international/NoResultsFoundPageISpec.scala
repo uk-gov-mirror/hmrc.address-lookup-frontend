@@ -18,13 +18,14 @@ package controllers.international
 
 import controllers.routes
 import itutil.IntegrationSpecBase
-import itutil.config.IntegrationTestConstants._
+import itutil.config.IntegrationTestConstants.*
 import itutil.config.PageElementConstants.LookupPage
-import model._
+import model.*
 import org.jsoup.Jsoup
 import play.api.http.HeaderNames
 import play.api.http.Status.OK
 import play.api.libs.json.Json
+import play.api.libs.ws.WSResponse
 import services.JourneyDataV2Cache
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -65,7 +66,7 @@ class NoResultsFoundPageISpec extends IntegrationSpecBase {
           .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF, "Csrf-Token" -> "nocheck")
           .get()
 
-        val res = await(fResponse)
+        val res: WSResponse = await(fResponse)
         res.status.shouldBe(OK)
 
         testCustomPartsOfGovWrapperElementsForDefaultConfig(fResponse)
@@ -99,7 +100,7 @@ class NoResultsFoundPageISpec extends IntegrationSpecBase {
           .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF, "Csrf-Token" -> "nocheck")
           .get()
 
-        val res = await(fResponse)
+        val res: WSResponse = await(fResponse)
         res.status.shouldBe(OK)
 
         testCustomPartsOfGovWrapperElementsForFullConfigAllTrue(fResponse, "NAV_TITLE")
@@ -132,7 +133,7 @@ class NoResultsFoundPageISpec extends IntegrationSpecBase {
           .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF, "Csrf-Token" -> "nocheck")
           .get()
 
-        val res = await(fResponse)
+        val res: WSResponse = await(fResponse)
         res.status.shouldBe(OK)
 
         testCustomPartsOfGovWrapperElementsForFullConfigWithAllTopConfigAsNoneAndAllBooleansFalse(fResponse)
@@ -166,7 +167,7 @@ class NoResultsFoundPageISpec extends IntegrationSpecBase {
           .withHttpHeaders(HeaderNames.COOKIE -> (sessionCookieWithCSRF + ";PLAY_LANG=cy;"), "Csrf-Token" -> "nocheck")
           .get()
 
-        val res = await(fResponse)
+        val res: WSResponse = await(fResponse)
         res.status.shouldBe(OK)
 
         testCustomPartsOfGovWrapperElementsForFullConfigWithAllTopConfigAsNoneAndAllBooleansFalse(fResponse)
@@ -210,7 +211,7 @@ class NoResultsFoundPageISpec extends IntegrationSpecBase {
           .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF, "Csrf-Token" -> "nocheck")
           .get()
 
-        val res = await(fResponse)
+        val res: WSResponse = await(fResponse)
         res.status.shouldBe(OK)
 
         val doc = getDocFromResponse(res)
@@ -252,11 +253,11 @@ class NoResultsFoundPageISpec extends IntegrationSpecBase {
           .withHttpHeaders(HeaderNames.COOKIE -> sessionCookieWithCSRF, "Csrf-Token" -> "nocheck")
           .get()
 
-        val res = await(fResponse)
+        val res: WSResponse = await(fResponse)
         res.status.shouldBe(OK)
 
         val document = Jsoup.parse(res.body)
-        document.getElementById("pageHeading").classNames() should contain("govuk-heading-l")
+        document.getElementById("pageHeading").classNames().should(contain("govuk-heading-l"))
       }
     }
   }
